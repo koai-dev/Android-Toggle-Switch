@@ -1,3 +1,7 @@
+# This repo rehosted to jitpack.io
+to use:
+implementation 'com.github.koai-dev:Android-Toggle-Switch:1.0.0'
+
 # Android-Toggle-Switch
 
 ## Deprecation notice: this library is no longer maintained. If you are currently using it, we reccomend switching to the fork by its original developer: https://github.com/llollox/Android-Toggle-Switch
