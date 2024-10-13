@@ -1,6 +1,7 @@
 # This repo rehosted to jitpack.io
 to use:
-implementation 'com.github.koai-dev:Android-Toggle-Switch:1.0.0'
+
+implementation 'com.github.koai-dev:Android-Toggle-Switch:1.0.1'
 
 # Android-Toggle-Switch
 
