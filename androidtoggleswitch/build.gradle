@@ -1,18 +1,17 @@
-apply plugin: 'com.android.library'
-
-ext {
-    PUBLISH_GROUP_ID    = 'us.belka'
-    PUBLISH_ARTIFACT_ID = 'androidtoggleswitch'
-    PUBLISH_VERSION     = '1.2.2'
+plugins {
+    id 'com.android.library'
+//    id 'org.jetbrains.kotlin.android'
+    id("maven-publish")
 }
+group = 'com.koai-dev'
+version = '1.0.0'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
-
+    compileSdk 35
+    namespace "belka.us.androidtoggleswitch"
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 24
+        minSdk 16
+        targetSdk 35
         versionCode 1
         versionName "1.0"
     }
@@ -22,11 +21,47 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
 }
 
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+afterEvaluate{
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.koai-dev'
+                artifactId = 'android_toggle_switch'
+                version = '1.0.0'
+
+                afterEvaluate {
+                    from components.release
+                }
+            }
+        }
+    }
+}
+
+task createReleaseTag {
+    doLast {
+        def tagName = "1.0.0"
+        try {
+            exec {
+                commandLine("git", "tag", "-a", tagName, "-m", "Release tag $tagName")
+            }
+
+            exec {
+                commandLine("git", "push", "origin", tagName)
+            }
+        } catch (e) {
+            println(e.toString())
+        }
+    }
+}
